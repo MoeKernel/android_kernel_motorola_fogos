@@ -1,0 +1,89 @@
+config TOUCHSCREEN_ILITEK_V3_MMI
+	tristate "MMI Ilitek V3 Touchscreen"
+	default n
+	help
+	  Say Y here if you have an MMI Ilitek V3 touchscreen connected
+	  to your system by SPI bus.
+
+	  If unsure, say N.
+
+config TOUCHSCREEN_ILITEK_V3_MMI_ENABLE_DOUBLE_TAP
+	bool "Enable double tap"
+	depends on TOUCHSCREEN_ILITEK_V3_MMI
+	default n
+	help
+	  Say Y here to enable double tap for MMI Ilitek V3 touchscreen.
+
+	  If unsure, say N.
+
+config TOUCHSCREEN_ILITEK_V3_MMI_USES_DOUBLE_TAP_CTRL
+	bool "Double tap control"
+	depends on TOUCHSCREEN_ILITEK_V3_MMI
+	default n
+	help
+	  Say Y here to enable double tap control for MMI Ilitek V3 touchscreen.
+
+	  If unsure, say N.
+
+config TOUCHSCREEN_ILITEK_V3_MMI_SET_TOUCH_STATE
+	bool "Set touch state"
+	depends on TOUCHSCREEN_ILITEK_V3_MMI
+	default n
+	help
+	  Say Y here to enable touch state for MMI Ilitek V3 touchscreen.
+
+	  If unsure, say N.
+
+config TOUCHSCREEN_ILITEK_V3_MMI_RESUME_BY_DDI
+	bool "Resume by DDI"
+	depends on TOUCHSCREEN_ILITEK_V3_MMI
+	default n
+	help
+	  Say Y here to enable resume by DDI for MMI Ilitek V3 touchscreen.
+
+	  If unsure, say N.
+
+config TOUCHSCREEN_ILITEK_V3_MMI_CHARGER
+	bool "Charger support"
+	depends on TOUCHSCREEN_ILITEK_V3_MMI
+	default n
+	help
+	  Say Y here to enable charger support for MMI Ilitek V3 touchscreen.
+
+	  If unsure, say N.
+
+config TOUCHSCREEN_ILITEK_V3_MMI_MTK_CHECK_PANEL
+	bool "MTK panel check"
+	depends on TOUCHSCREEN_ILITEK_V3_MMI
+	default n
+	help
+	  Say Y here to enable MTK panel check for MMI Ilitek V3 touchscreen.
+
+	  If unsure, say N.
+
+config TOUCHSCREEN_ILITEK_V3_MMI_MULTI_TP_MODULE
+	bool "Multi TP module"
+	depends on TOUCHSCREEN_ILITEK_V3_MMI
+	default n
+	help
+	  Say Y here to enable multi TP module for MMI Ilitek V3 touchscreen.
+
+	  If unsure, say N.
+
+config TOUCHSCREEN_ILITEK_V3_MMI_LAST_TIME
+	bool "Touch last time"
+	depends on TOUCHSCREEN_ILITEK_V3_MMI
+	default n
+	help
+	  Say Y here to enable touch last time for MMI Ilitek V3 touchscreen.
+
+	  If unsure, say N.
+
+config TOUCHSCREEN_ILITEK_V3_MMI_STOWED_MODE_EN
+	bool "Enable stowed mode"
+	depends on TOUCHSCREEN_ILITEK_V3_MMI
+	default n
+	help
+	  Say Y here to enable stowed mode for MMI Ilitek V3 touchscreen.
+
+	  If unsure, say N.
