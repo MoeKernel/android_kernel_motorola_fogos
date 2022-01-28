@@ -1,0 +1,13 @@
+config INPUT_RBS_FOD_MMI
+	tristate "MMI RBS FOD sensor"
+	default n
+	help
+	  Say Y here if you wish to include support for MMI RBS FOD sensor.
+	  If unsure, say N.
+
+config INPUT_RBS_PANEL_NOTIFICATIONS
+	bool "MMI RBS FOD sensor panel notifications"
+	depends on RBS_FOD_MMI
+	default n
+	help
+	  Enable panel notifications for MMI RBS FOD sensor.

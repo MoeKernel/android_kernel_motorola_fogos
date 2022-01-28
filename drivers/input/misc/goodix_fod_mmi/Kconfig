@@ -1,0 +1,20 @@
+config INPUT_GOODIX_FOD_MMI
+	tristate "MMI Goodix FOD sensor"
+	default n
+	help
+	  Say Y here if you wish to include support for MMI Goodix FOD sensor.
+	  If unsure, say N.
+
+config GOODIX_DRM_PANEL_NOTIFICATIONS
+	bool "MMI Goodix FOD sensor DRM panel notifications"
+	depends on INPUT_GOODIX_FOD_MMI
+	default n
+	help
+	  Enable DRM panel notifications for MMI Goodix FOD sensor.
+
+config INPUT_MISC_GOODIX_FOD_SOFTDEP
+	bool "MMI Goodix FOD sensor soft dependency on GPIO_PCAL6408"
+	depends on INPUT_GOODIX_FOD_MMI
+	default n
+	help
+	  Enable soft dependency on GPIO_PCAL6408 for MMI Goodix FOD sensor.

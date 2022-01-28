@@ -1,0 +1,21 @@
+config INPUT_EGIS_FPS_MMI
+	tristate "MMI egistec fingerprint sensor"
+	default n
+	help
+	  Say Y here if you wish to include support for MMI egistec fingerprint sensor.
+	  If unsure, say N.
+
+config INPUT_EGIS_ET721_FOD
+	bool "FOD Support for MMI egistec fingerprint sensor"
+	default n
+	depends on INPUT_EGIS_FPS_MMI
+	help
+	  Say Y here if you wish to include FOD support for MMI egistec fingerprint sensor.
+	  If unsure, say N.
+
+config INPUT_EGIS_PANEL_NOTIFICATIONS
+	bool "MMI egistec fingeprint sensor panel notifications"
+	depends on INPUT_EGIS_FPS_MMI
+	default n
+	help
+	  Enable panel notifications for MMI egistec fingeprint sensor.

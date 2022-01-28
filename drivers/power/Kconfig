@@ -2,3 +2,44 @@
 source "drivers/power/avs/Kconfig"
 source "drivers/power/reset/Kconfig"
 source "drivers/power/supply/Kconfig"
+
+config MMI_QC3P_TURBO_CHARGER
+	bool "Enable MMI QC3P Turbo Charger"
+	default n
+	help
+	  Say Y here if you have a MMI QC3P turbo charger compatible device connected.
+	  If unsure, say N.
+
+config MMI_QC3P_WT6670_DETECTED
+	bool "Enable MMI QC3P WT6670 detection"
+	default n
+	help
+	  Say Y here to enable MMI QC3P WT6670 detection.
+	  If unsure, say N.
+
+config MMI_QC3P_Z350_DETECTED
+	bool "Enable MMI QC3P Z350 detection"
+	default n
+	help
+	  Say Y here to enable MMI QC3P Z350 detection.
+	  If unsure, say N.
+
+config MMI_EXT_CHG_LED
+	bool "Enable MMI external charger LED"
+	default n
+	help
+	  Say Y here if you have a MMI external charger LED.
+	  If unsure, say N.
+
+source "drivers/power/bq2589x_chg_mmi/Kconfig"
+source "drivers/power/bq2597x_mmi_iio/Kconfig"
+source "drivers/power/bq25980_mmi_iio/Kconfig"
+source "drivers/power/cw2217b_fg_mmi/Kconfig"
+source "drivers/power/mmi_charger/Kconfig"
+source "drivers/power/mmi_discrete_charger/Kconfig"
+source "drivers/power/mmi_discrete_turbo_charger/Kconfig"
+source "drivers/power/mmi_parallel_charger_iio/Kconfig"
+source "drivers/power/mmi-smbcharger-iio/Kconfig"
+source "drivers/power/qpnp_adaptive_charge/Kconfig"
+source "drivers/power/sgm4154x_chg_mmi/Kconfig"
+source "drivers/power/sm5602_fg_mmi/Kconfig"
