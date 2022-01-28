@@ -1,0 +1,8 @@
+ifneq ($(filter m y,$(CONFIG_SEC_NFC_PRODUCT_N5)),)
+	ccflags-y += -DCONFIG_SEC_NFC_PRODUCT_N5
+endif
+ifneq ($(filter m y,$(CONFIG_SEC_NFC_IF_I2C)),)
+	ccflags-y += -DCONFIG_SEC_NFC_IF_I2C
+endif
+
+obj-$(CONFIG_SEC_NFC) += sec_nfc.o
