@@ -4895,7 +4895,7 @@ static int parse_mmi_dual_dt(struct smb_mmi_charger *chg)
 
 static int smb_mmi_chg_config_init(struct smb_mmi_charger *chip)
 {
-	int subtype = (u8)of_device_get_match_data(chip->dev);
+	int subtype = (u8)(long)of_device_get_match_data(chip->dev);
 
 	switch (subtype) {
 	case PM8150B:
