@@ -44,9 +44,7 @@ make -j$(nproc --all) $MAKE_PARAMS || exit $?
 make -j$(nproc --all) $MAKE_PARAMS INSTALL_MOD_PATH=modules INSTALL_MOD_STRIP=1 modules_install
 
 kernel="out/arch/arm64/boot/Image"
-#dtb="out/arch/arm64/boot/dts/vendor/qcom/yupik.dtb"
 dtb="out/arch/arm64/boot/dts/vendor/qcom/blair-moto-fogos-base.dtb"
-#dtbo="out/arch/arm64/boot/dts/vendor/qcom/lisa-sm7325-overlay.dtbo"
 dtbo="out/arch/arm64/boot/dts/vendor/qcom/blair-fogos-dvt1-overlay.dtbo"
 
 if [ ! -f "$kernel" ] || [ ! -f "$dtb" ] || [ ! -f "$dtbo" ]; then
