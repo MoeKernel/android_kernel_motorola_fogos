@@ -3,12 +3,10 @@
 # Compile script for Moeニャン kernel
 # Copyright (C) 2020-2021 Adithya R. | (C) 2024 - Shoiya Akari.
 
-SECONDS=0 # builtin bash timer
+SECONDS=0
 TC_DIR="$HOME/tc/clang-r498229b"
-#TC_DIR="$HOME/tc/clang-20.0.0"
 AK3_DIR="$HOME/AnyKernel3"
 DEFCONFIG="vendor/fogos_defconfig"
-
 ZIPNAME="MoeKernel-fogos-$(date '+%Y%m%d-%H%M').zip"
 
 if ! [ -d "${TC_DIR}" ]; then
@@ -55,8 +53,8 @@ fi
 echo -e "\nKernel compiled succesfully! Zipping up...\n"
 if [ -d "$AK3_DIR" ]; then
 	cp -r $AK3_DIR AnyKernel3
-	git -C AnyKernel3 checkout lisa &> /dev/null
-elif ! git clone -q https://github.com/ghostrider-reborn/AnyKernel3 -b lisa; then
+	git -C AnyKernel3 checkout fogos &> /dev/null
+elif ! git clone -q -b fogos https://github.com/MoeKernel/AnyKernel3; then
 	echo -e "\nAnyKernel3 repo not found locally and couldn't clone from GitHub! Aborting..."
 	exit 1
 fi
