@@ -5,6 +5,7 @@
 
 SECONDS=0
 PATH=$PWD/toolchain/bin:$PATH
+DEVICE=g34
 
 export modpath=AnyKernel3/modules/vendor/lib/modules
 export ARCH=arm64
