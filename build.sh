@@ -1,75 +1,143 @@
 #!/bin/bash
 #
-# Compile script for Moeニャン kernel
-# Copyright (C) 2020-2021 Adithya R. | (C) 2024 - Shoiya Akari.
+# Compile script for MoeKernel
+# Copyright (C) 2024 Shoiya A.
 
 SECONDS=0
-TC_DIR="$HOME/tc/clang-r498229b"
+PATH=$PWD/toolchain/bin:$PATH
+
+export modpath=AnyKernel3/modules/vendor/lib/modules
+export ARCH=arm64
+
+export KBUILD_BUILD_USER=Moe
+export KBUILD_BUILD_HOST=Nyan
+
+export LLVM_DIR=$PWD/toolchain/bin
+export LLVM=1
+
 AK3_DIR="$HOME/AnyKernel3"
-DEFCONFIG="vendor/fogos_defconfig"
+DEFCONFIG="fogos_defconfig"
 ZIPNAME="MoeKernel-fogos-$(date '+%Y%m%d-%H%M').zip"
 
-if ! [ -d "${TC_DIR}" ]; then
-echo "Clang not found! Cloning to ${TC_DIR}..."
-if ! git clone --depth=1 https://gitlab.com/moehacker/clang-r498229b.git ${TC_DIR}; then
-echo "Cloning failed! Aborting..."
-exit 1
-fi
+if [[ $1 = "-m" || $1 = "--menu" ]]; then
+    mkdir -p out
+    make O=out ARCH=arm64 $DEFCONFIG menuconfig
+elif [[ $1 = "menu" ]]; then
+    mkdir -p out
+    make O=out ARCH=arm64 $DEFCONFIG menuconfig
+else
+    mkdir -p out
+    make O=out ARCH=arm64 $DEFCONFIG
 fi
 
-MAKE_PARAMS="O=out ARCH=arm64 CC=clang CLANG_TRIPLE=aarch64-linux-gnu- LLVM=1 LLVM_IAS=1 \
-	CROSS_COMPILE=$TC_DIR/bin/llvm-"
+url_ksu_update="https://github.com/MoeKernel/scripts/raw/ksu/ksu_update.sh"
+url_init_clang="https://github.com/MoeKernel/scripts/raw/ksu/init_clang.sh"
 
-export PATH="$TC_DIR/bin:$PATH"
+file_ksu_update="$PWD/ksu_update.sh"
+file_init_clang="$PWD/init_clang.sh"
+
+download_chmod_and_execute() {
+    local url="$1"
+    local file="$2"
+
+    if [ ! -f "$file" ]; then
+        echo "File $file not found. Downloading..."
+        wget "$url" -O "$file"
+        if [ $? -eq 0 ]; then
+            echo "Download of $file completed."
+            chmod +x "$file"
+            echo "Execute permissions added to $file."
+        else
+            echo "Failed to download $file."
+            return 1
+        fi
+    else
+        echo "File $file already exists."
+    fi
+
+    echo "Executing $file..."
+    "$file"
+    if [ $? -eq 0 ]; then
+        echo "$file executed successfully."
+    else
+        echo "Failed to execute $file."
+    fi
+}
+
+download_chmod_and_execute "$url_ksu_update" "$file_ksu_update"
+download_chmod_and_execute "$url_init_clang" "$file_init_clang"
+
+ARGS='
+CC=clang
+LD='${LLVM_DIR}/ld.lld'
+ARCH=arm64
+AR='${LLVM_DIR}/llvm-ar'
+NM='${LLVM_DIR}/llvm-nm'
+AS='${LLVM_DIR}/llvm-as'
+OBJCOPY='${LLVM_DIR}/llvm-objcopy'
+OBJDUMP='${LLVM_DIR}/llvm-objdump'
+READELF='${LLVM_DIR}/llvm-readelf'
+OBJSIZE='${LLVM_DIR}/llvm-size'
+STRIP='${LLVM_DIR}/llvm-strip'
+LLVM_AR='${LLVM_DIR}/llvm-ar'
+LLVM_DIS='${LLVM_DIR}/llvm-dis'
+LLVM_NM='${LLVM_DIR}/llvm-nm'
+LLVM=1
+'
 
 if [[ $1 = "-r" || $1 = "--regen" ]]; then
-	make $MAKE_PARAMS $DEFCONFIG savedefconfig
+	make $ARGS $DEFCONFIG savedefconfig
 	cp out/defconfig arch/arm64/configs/$DEFCONFIG
 	echo -e "\nSuccessfully regenerated defconfig at $DEFCONFIG"
 	exit
 fi
 
-if [[ $1 = "-c" || $1 = "--clean" ]]; then
-	rm -rf out
-	echo "Cleaned output folder"
-fi
+make ${ARGS} O=out $DEFCONFIG moto.config
+make ${ARGS} O=out -j$(nproc)
 
-mkdir -p out
-make $MAKE_PARAMS $DEFCONFIG
+[ ! -e "out/arch/arm64/boot/Image" ] && \
+echo "  ERROR : image binary not found in any of the specified locations , fix compile!" && \
+exit 1
 
-echo -e "\nStarting compilation...\n"
-make -j$(nproc --all) $MAKE_PARAMS || exit $?
-make -j$(nproc --all) $MAKE_PARAMS INSTALL_MOD_PATH=modules INSTALL_MOD_STRIP=1 modules_install
-
-kernel="out/arch/arm64/boot/Image"
-dtb="out/arch/arm64/boot/dts/vendor/qcom/blair-moto-fogos-base.dtb"
-dtbo="out/arch/arm64/boot/dts/vendor/qcom/blair-fogos-dvt1-overlay.dtbo"
-
-if [ ! -f "$kernel" ] || [ ! -f "$dtb" ] || [ ! -f "$dtbo" ]; then
-	echo -e "\nCompilation failed!"
-	exit 1
-fi
+make O=out ${ARGS} -j$(nproc) INSTALL_MOD_PATH=modules INSTALL_MOD_STRIP=1 modules_install
 
 echo -e "\nKernel compiled succesfully! Zipping up...\n"
 if [ -d "$AK3_DIR" ]; then
 	cp -r $AK3_DIR AnyKernel3
 	git -C AnyKernel3 checkout fogos &> /dev/null
-elif ! git clone -q -b fogos https://github.com/MoeKernel/AnyKernel3; then
+elif ! git clone -q https://github.com/MoeKernel/AnyKernel3 -b fogos; then
 	echo -e "\nAnyKernel3 repo not found locally and couldn't clone from GitHub! Aborting..."
 	exit 1
 fi
-cp $kernel AnyKernel3
-cp $dtb AnyKernel3/dtb
-python2 scripts/dtc/libfdt/mkdtboimg.py create AnyKernel3/dtbo.img --page_size=4096 $dtbo
-cp $(find out/modules/lib/modules/5.4* -name '*.ko') AnyKernel3/modules/vendor/lib/modules/
-cp out/modules/lib/modules/5.4*/modules.{alias,dep,softdep} AnyKernel3/modules/vendor/lib/modules
-cp out/modules/lib/modules/5.4*/modules.order AnyKernel3/modules/vendor/lib/modules/modules.load
-sed -i 's/\(kernel\/[^: ]*\/\)\([^: ]*\.ko\)/\/vendor\/lib\/modules\/\2/g' AnyKernel3/modules/vendor/lib/modules/modules.dep
-sed -i 's/.*\///g' AnyKernel3/modules/vendor/lib/modules/modules.load
-rm -rf out/arch/arm64/boot out/modules
+
+mkdir -p ${modpath}
+kver=$(make kernelversion)
+kmod=$(echo ${kver} | awk -F'.' '{print $3}')
+
+mkdir -p AnyKernel3/modules/vendor/lib/modules 
+kver=$(make kernelversion)
+kmod=$(echo ${kver} | awk -F'.' '{print $3}')
+cp out/.config AnyKernel3/config
+cp out/arch/arm64/boot/Image AnyKernel3/Image
+cp out/arch/arm64/boot/dtb.img AnyKernel3/dtb
+cp out/arch/arm64/boot/dtbo.img AnyKernel3/dtbo.img
+cp build.sta/${DEVICE}_modules.blocklist ${modpath}/modules.blocklist
+cp $(find out/modules/lib/modules/5.4* -name '*.ko') ${modpath}/
+cp out/modules/lib/modules/5.4*/modules.{alias,dep,softdep} ${modpath}/
+cp out/modules/lib/modules/5.4*/modules.order ${modpath}/modules.load
+
+sed -i 's/\(kernel\/[^: ]*\/\)\([^: ]*\.ko\)/\/vendor\/lib\/modules\/\2/g' ${modpath}/modules.dep
+sed -i 's/.*\///; s/\.ko$//' ${modpath}/modules.load
+
+source build.sta/${DEVICE}_mdconf
+for useles_modules in "${modules_to_nuke[@]}"; do
+  grep -vE "$useles_modules" ${modpath}/modules.load > /tmp/templd && mv /tmp/templd ${modpath}/modules.load
+done
+
 cd AnyKernel3
 zip -r9 "../$ZIPNAME" * -x .git README.md *placeholder
 cd ..
-rm -rf AnyKernel3
 echo -e "\nCompleted in $((SECONDS / 60)) minute(s) and $((SECONDS % 60)) second(s) !"
 echo "Zip: $ZIPNAME"
+curl -F "file=@$ZIPNAME" https://temp.sh/upload
+rm -rf AnyKernel3
