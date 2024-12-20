@@ -476,7 +476,7 @@ static int ili_disp_notifier_callback(struct notifier_block *nb,
 			}
 			else if (*data == MTK_DISP_BLANK_POWERDOWN) {
 #ifdef ILI_DOUBLE_TAP_CTRL
-				if (ilits->should_enable_gesture) {
+				if (ilits->double_tap_enabled || ilits->single_tap_enabled) {
 					ILI_INFO("TP suspend: tap gesture suspend\n");
 					if (ili_sleep_handler(TP_SUSPEND) < 0)
 						ILI_ERR("TP suspend failed\n");
@@ -632,7 +632,7 @@ static int drm_notifier_callback(struct notifier_block *self, unsigned long even
 	case DRM_PANEL_BLANK_POWERDOWN:
 		if (DRM_PANEL_EARLY_EVENT_BLANK == event) {
 #ifdef ILI_DOUBLE_TAP_CTRL
-			if (ilits->should_enable_gesture) {
+			if (ilits->double_tap_enabled || ilits->single_tap_enabled) {
 				ILI_INFO("TP suspend: tap gesture suspend\n");
 				if (ili_sleep_handler(TP_SUSPEND) < 0)
 					ILI_ERR("TP suspend failed\n");
