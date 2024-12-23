@@ -5947,14 +5947,6 @@ CONFIG_SENSORS_CLASS=m
 CONFIG_WATCHDOGTEST=m
 
 #
-# KernelSU
-#
-CONFIG_KSU=y
-# CONFIG_KSU_DEBUG is not set
-# end of KernelSU
-# end of Device Drivers
-
-#
 # File systems
 #
 CONFIG_DCACHE_WORD_ACCESS=y
