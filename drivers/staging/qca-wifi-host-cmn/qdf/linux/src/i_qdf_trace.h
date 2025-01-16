@@ -258,7 +258,9 @@ static inline void __qdf_trace_hexdump_dummy(QDF_MODULE_ID module,
 #define QDF_TRACE_EXIT(params...) __qdf_trace_noop(params)
 #endif
 
+#ifdef WLAN_DEBUG
 #define QDF_ENABLE_TRACING
+#endif
 #define qdf_scnprintf scnprintf
 
 #ifdef QDF_ENABLE_TRACING
@@ -339,7 +341,7 @@ static inline void qdf_vprint(const char *fmt, va_list args)
 }
 #endif
 
-#ifdef PANIC_ON_BUG
+#if defined(PANIC_ON_BUG) && defined(WLAN_DEBUG)
 #ifdef CONFIG_SLUB_DEBUG
 /**
  * __qdf_bug() - Calls BUG() when the PANIC_ON_BUG compilation option is enabled
