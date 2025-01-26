@@ -119,6 +119,7 @@ int cass_best_cpu(struct task_struct *p, int prev_cpu, bool sync)
 		/* Use the free candidate slot for @curr */
 		struct cass_cpu_cand *curr = &cands[cidx];
 		struct cpuidle_state *idle_state;
+		struct rq *rq = cpu_rq(cpu);
 
 		/*
 		 * Check if this CPU is idle or only has SCHED_IDLE tasks. For
