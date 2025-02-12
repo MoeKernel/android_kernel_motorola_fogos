@@ -561,7 +561,7 @@ static int chipone_sensor_init(struct chipone_ts_data *data)
         __set_bit(EV_KEY, sensor_input_dev->evbit);
         __set_bit(BTN_TRIGGER_HAPPY3, sensor_input_dev->keybit);
 #ifdef CONFIG_BOARD_USES_DOUBLE_TAP_CTRL
-        __set_bit(BTN_TRIGGER_HAPPY6, sensor_input_dev->keybit);
+        __set_bit(KEY_WAKEUP, sensor_input_dev->keybit);
 #endif
         __set_bit(EV_SYN, sensor_input_dev->evbit);
 

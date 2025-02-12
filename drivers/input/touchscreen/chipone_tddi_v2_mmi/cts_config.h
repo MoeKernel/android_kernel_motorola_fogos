@@ -117,7 +117,7 @@
     { GESTURE_C, KEY_C,},               \
     { GESTURE_W, KEY_W,},               \
     { GESTURE_V, KEY_V,},               \
-    { GESTURE_D_TAP, BTN_TRIGGER_HAPPY6,},          \
+    { GESTURE_D_TAP, KEY_WAKEUP,},          \
     { GESTURE_Z, KEY_Z,},               \
     { GESTURE_M, KEY_M,},               \
     { GESTURE_O, KEY_O,},               \
