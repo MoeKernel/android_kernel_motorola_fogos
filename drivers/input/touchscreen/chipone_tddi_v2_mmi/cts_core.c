@@ -1565,7 +1565,7 @@ int cts_suspend_device(struct cts_device *cts_dev)
     }
 
 #ifdef CONFIG_BOARD_USES_DOUBLE_TAP_CTRL
-        cts_tcs_set_gesture_en_mask(cts_dev, cts_data->d_tap_flag, cts_data->s_tap_flag);
+        cts_tcs_set_gesture_en_mask(cts_dev, cts_data->double_tap_enabled, cts_data->s_tap_flag);
 #endif
 
     cts_info("Set suspend mode:%s",

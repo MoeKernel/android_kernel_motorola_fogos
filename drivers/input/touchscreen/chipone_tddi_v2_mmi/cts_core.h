@@ -472,7 +472,7 @@ struct chipone_ts_data {
 #ifdef CONFIG_GTP_LAST_TIME
     ktime_t last_event_time;
 #endif
-
+    bool double_tap_enabled;
 #ifdef CONFIG_BOARD_USES_DOUBLE_TAP_CTRL
         unsigned char gesture_mode_type;
         bool d_tap_flag;

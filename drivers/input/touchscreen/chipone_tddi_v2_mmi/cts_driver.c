@@ -204,7 +204,7 @@ static void fb_notifier_callback(enum panel_event_notifier_tag tag,
 		if (notification->notif_data.early_trigger) {
 #ifdef CHIPONE_SENSOR_EN
 #ifdef CONFIG_BOARD_USES_DOUBLE_TAP_CTRL
-			if (cts_data->s_tap_flag || cts_data->d_tap_flag) {
+			if (cts_data->s_tap_flag || cts_data->double_tap_enabled) {
 				cts_enable_gesture_wakeup(&cts_data->cts_dev);
 				g_cts_data->should_enable_gesture = true;
 			}
@@ -260,7 +260,7 @@ static int fb_notifier_callback(struct notifier_block *nb,
         if (blank == DRM_PANEL_BLANK_POWERDOWN) {
 #ifdef CHIPONE_SENSOR_EN
 #ifdef CONFIG_BOARD_USES_DOUBLE_TAP_CTRL
-            if (cts_data->s_tap_flag || cts_data->d_tap_flag) {
+            if (cts_data->s_tap_flag || cts_data->double_tap_enabled) {
                 cts_enable_gesture_wakeup(&cts_data->cts_dev);
                 g_cts_data->should_enable_gesture = true;
             }
