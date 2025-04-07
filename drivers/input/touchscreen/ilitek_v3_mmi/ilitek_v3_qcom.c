@@ -57,7 +57,7 @@ static int ili_tp_power_on_reinit(void)
 }
 #endif
 
-#ifdef ILI_SENSOR_EN
+#if defined(ILI_SENSOR_EN) && !defined(ILI_DOUBLE_TAP_CTRL)
 static struct sensors_classdev __maybe_unused sensors_touch_cdev = {
 
 	.name = "dt-gesture",
@@ -136,6 +136,9 @@ void ili_input_register(void)
 	}
 
 	/* Gesture keys register */
+#ifdef ILI_DOUBLE_TAP_CTRL
+	input_set_capability(ilits->input, EV_KEY, KEY_WAKEUP);
+#endif
 	input_set_capability(ilits->input, EV_KEY, KEY_POWER);
 	input_set_capability(ilits->input, EV_KEY, KEY_GESTURE_UP);
 	input_set_capability(ilits->input, EV_KEY, KEY_GESTURE_DOWN);
@@ -151,6 +154,9 @@ void ili_input_register(void)
 	input_set_capability(ilits->input, EV_KEY, KEY_GESTURE_C);
 	input_set_capability(ilits->input, EV_KEY, KEY_GESTURE_F);
 
+#ifdef ILI_DOUBLE_TAP_CTRL
+	__set_bit(KEY_WAKEUP, ilits->input->keybit);
+#endif
 	__set_bit(KEY_GESTURE_POWER, ilits->input->keybit);
 	__set_bit(KEY_GESTURE_UP, ilits->input->keybit);
 	__set_bit(KEY_GESTURE_DOWN, ilits->input->keybit);
@@ -745,13 +751,10 @@ static void ilitek_plat_late_resume(struct early_suspend *h)
 }
 #endif/*defined(CONFIG_FB) || defined(CONFIG_DRM_MSM)*/
 
-#ifdef ILI_SENSOR_EN
+#if defined(ILI_SENSOR_EN) && !defined(ILI_DOUBLE_TAP_CTRL)
 static int ili_sensor_set_enable(struct sensors_classdev *sensors_cdev,
 		unsigned int enable)
 {
-#ifdef ILI_DOUBLE_TAP_CTRL
-	ILI_DBG("double tap ctrl, do nothing\n");
-#else
 	ILI_INFO("Gesture set enable %d!", enable);
 	if (enable == 1) {
 		ilits->should_enable_gesture = true;
@@ -760,7 +763,6 @@ static int ili_sensor_set_enable(struct sensors_classdev *sensors_cdev,
 	} else {
 		ILI_INFO("unknown enable symbol\n");
 	}
-#endif
 	return 0;
 }
 
@@ -788,9 +790,6 @@ static int ili_sensor_init(struct ilitek_ts_data *data)
 	if (data->report_gesture_key) {
 		__set_bit(EV_KEY, sensor_input_dev->evbit);
 		__set_bit(BTN_TRIGGER_HAPPY3, sensor_input_dev->keybit);
-#ifdef ILI_DOUBLE_TAP_CTRL
-		__set_bit(BTN_TRIGGER_HAPPY6, sensor_input_dev->keybit);
-#endif
 	} else {
 		__set_bit(EV_ABS, sensor_input_dev->evbit);
 		input_set_abs_params(sensor_input_dev, ABS_DISTANCE,
@@ -935,7 +934,7 @@ err_register_disp_notif_failed:
 
 static int ilitek_plat_probe(void)
 {
-#ifdef ILI_SENSOR_EN
+#if defined(ILI_SENSOR_EN) && !defined(ILI_DOUBLE_TAP_CTRL)
 	static bool initialized_sensor;
 #endif
 #if SUSPEND_RESUME_SUPPORT
@@ -993,7 +992,7 @@ static int ilitek_plat_probe(void)
 #endif
 #endif
 
-#ifdef ILI_SENSOR_EN
+#if defined(ILI_SENSOR_EN) && !defined(ILI_DOUBLE_TAP_CTRL)
 	if (!initialized_sensor) {
 #ifdef CONFIG_HAS_WAKELOCK
 		wake_lock_init(&(ilits->gesture_wakelock), WAKE_LOCK_SUSPEND, "dt-wake-lock");
