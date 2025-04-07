@@ -103,7 +103,7 @@
 #include <linux/msm_drm_notify.h>
 #endif
 
-#ifdef ILI_SENSOR_EN
+#if defined(ILI_SENSOR_EN) && !defined(ILI_DOUBLE_TAP_CTRL)
 #include <linux/sensors.h>
 #endif
 
@@ -1103,6 +1103,8 @@ enum touch_state {
 	TOUCH_DEEP_SLEEP_STATE = 0,
 	TOUCH_LOW_POWER_STATE,
 };
+
+#ifndef ILI_DOUBLE_TAP_CTRL
 struct ili_sensor_platform_data {
 	struct input_dev *input_sensor_dev;
 	struct sensors_classdev ps_cdev;
@@ -1111,6 +1113,7 @@ struct ili_sensor_platform_data {
 	struct ilitek_ts_data *data;
 };
 #define REPORT_MAX_COUNT 10000
+#endif
 #endif
 
 struct sram_test_para {
@@ -1349,12 +1352,13 @@ struct ilitek_ts_data {
 	uint8_t supported_gesture_type;
 	uint8_t sys_gesture_type;
 	uint8_t rst_pull_flag;
-#endif
+#else
 	struct ili_sensor_platform_data *sensor_pdata;
 #ifdef CONFIG_HAS_WAKELOCK
 	struct wake_lock gesture_wakelock;
 #else
 	struct wakeup_source *gesture_wakelock;
+#endif
 #endif
 #endif //ILI_SENSOR_EN
 
