@@ -4,7 +4,7 @@
 #include "cts_config.h"
 #include <linux/mmi_wake_lock.h>
 #include <linux/regulator/consumer.h>
-#ifdef CHIPONE_SENSOR_EN
+#if defined(CHIPONE_SENSOR_EN) && !defined(CONFIG_BOARD_USES_DOUBLE_TAP_CTRL)
 #include <linux/sensors.h>
 #endif
 
@@ -401,7 +401,7 @@ enum touch_panel_id {
         TOUCH_PANEL_MAX_IDX,
 };
 
-#ifdef CHIPONE_SENSOR_EN
+#if defined(CHIPONE_SENSOR_EN) && !defined(CONFIG_BOARD_USES_DOUBLE_TAP_CTRL)
 /* display state */
 enum display_state {
         SCREEN_UNKNOWN,
@@ -458,7 +458,7 @@ struct chipone_ts_data {
         bool wakeable;
         bool should_enable_gesture;
         bool gesture_enabled;
-        uint32_t report_gesture_key;
+#ifndef CONFIG_BOARD_USES_DOUBLE_TAP_CTRL
         enum display_state screen_state;
         struct mutex state_mutex;
         struct chipone_sensor_platform_data *sensor_pdata;
@@ -466,6 +466,7 @@ struct chipone_ts_data {
         struct wake_lock gesture_wakelock;
 #else
         struct wakeup_source *gesture_wakelock;
+#endif
 #endif
 #endif
 
