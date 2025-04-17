@@ -1,0 +1,6 @@
+config NFC_SN1XX
+	tristate "QTI NFC for SN1xx"
+	help
+	  This enables the QTI NFC driver for SN1xx based devices.
+
+	  If unsure, say N.
