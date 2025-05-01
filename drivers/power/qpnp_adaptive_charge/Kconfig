@@ -16,12 +16,3 @@ config USE_MMI_CHARGER
 	  Say Y here to use MMI charger.
 
 	  If unsure, say N.
-
-config ADAPTIVE_TOLERANCE_OPTIMIZATION
-	bool "Enable adaptive tolerance optimization"
-	depends on QPNP_ADAPTIVE_CHARGE
-	default n
-	help
-	  Say Y here to enable adaptive tolerance optimization.
-
-	  If unsure, say N.

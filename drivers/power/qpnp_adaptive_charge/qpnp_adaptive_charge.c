@@ -67,8 +67,8 @@ static struct adap_chg_data {
 	struct delayed_work	reinit_work;
 } adap_chg_data;
 
-int upper_limit = -1;
-int lower_limit = -1;
+int upper_limit = 100;
+int lower_limit = 0;
 int blocking = 0;
 
 #define ADAPTIVE_CHARGING_VOTER	"ADAPTIVE_CHARGING_VOTER"
@@ -155,34 +155,14 @@ static void update(struct adap_chg_data *data)
 	pr_info("Batt cap is %d, upper limit is %d, lower limit is %d\n",
 		data->batt_capacity, upper_limit, lower_limit);
 
-	if (upper_limit != -1) {
-		/* If no lower limit is defined, we are in Auto Mode */
-		if (lower_limit == -1) {
-#ifdef ADAPTIVE_TOLERANCE_OPTIMIZATION
-			if (data->batt_capacity > (upper_limit + 2)) {
-#else
-                        if (data->batt_capacity > (upper_limit + 1)) {
-#endif
-				suspend_charging(true);
-				stop_charging(true);
-			} else if (data->batt_capacity == (upper_limit + 1)) {
-				suspend_charging(false);
-				stop_charging(true);
-			} else if (data->batt_capacity < upper_limit) {
-				suspend_charging(false);
-				stop_charging(false);
-			}
-		/* Manual mode */
-		} else {
-			if (data->batt_capacity >= upper_limit) {
-				suspend_charging(true);
-				stop_charging(false);
-			} else if (data->batt_capacity <= lower_limit) {
-				suspend_charging(false);
-				stop_charging(false);
-			}
+	if (upper_limit != 100 && lower_limit != 0) {
+		if (data->batt_capacity >= upper_limit) {
+			suspend_charging(false);
+			stop_charging(true);
+		} else if (data->batt_capacity <= lower_limit) {
+			suspend_charging(false);
+			stop_charging(false);
 		}
-	/* Disable */
 	} else {
 		suspend_charging(false);
 		stop_charging(false);
@@ -218,7 +198,7 @@ static int set_upper_limit(const char *val, const struct kernel_param *kp)
 		return rc;
 
 	/* If both lower is off then turn it off */
-	if (lower_limit == -1 && new_limit == -1)
+	if (lower_limit == 0 && new_limit == 0)
 		upper_limit = new_limit;
 	/* Else check that we are valid (between 0 and 100 and bigger than lower) */
 	else if (new_limit > 0 && new_limit <= 100 && new_limit > lower_limit)
@@ -245,10 +225,10 @@ static int set_lower_limit(const char *val, const struct kernel_param *kp)
 	if (rc)
 		return rc;
 
-	if (new_limit >= -1 && new_limit < upper_limit)
+	if (new_limit >= 0 && new_limit < upper_limit)
 		lower_limit = new_limit;
 	else
-		lower_limit = -1;
+		lower_limit = 0;
 
 	pr_info("set lower limit to %d", lower_limit);
 	update(&adap_chg_data);
@@ -297,7 +277,7 @@ static int ps_notify_callback(struct notifier_block *nb,
 	if (event == PSY_EVENT_PROP_CHANGED &&
 			psy && psy->desc->get_property && psy->desc->name &&
 			!strncmp(psy->desc->name, "battery", sizeof("battery"))) {
-		if (upper_limit != -1)
+		if (upper_limit != 100)
 			schedule_work(&data->update);
 	}
 
@@ -345,8 +325,8 @@ module_param_cb(blocking,
 #define ADAP_INIT_RERUN 2
 static int qpnp_adap_chg_init_work(void)
 {
-	upper_limit = -1;
-	lower_limit = -1;
+	upper_limit = 100;
+	lower_limit = 0;
 	adap_chg_data.init_success = false;
 	adap_chg_data.charging_suspended = false;
 	adap_chg_data.charging_stopped = false;
