@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "622ea227_072dec3a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 28037
+      },
+      "writtenOn": "2025-05-16T20:44:22Z",
+      "side": 1,
+      "message": "Fixes instability on USB-PD chargers for miami",
+      "revId": "51ccc86efa9a852870aa4eaa62a7dc09bf69ede3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
