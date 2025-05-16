@@ -2837,7 +2837,7 @@ int32_t nvt_fw_class_init(bool create)
 	static int minor;
 
 	if (create) {
-#if defined (PALM_GESTURE) || defined (EDGE_SUPPRESSION) || defined(NVT_TOUCH_LAST_TIME)
+#if defined (PALM_GESTURE) || defined (EDGE_SUPPRESSION) || defined(NVT_TOUCH_LAST_TIME) || defined(NVT_SENSOR_EN)
 		ret = alloc_chrdev_region(&devno, 0, 1, NVT_PRIMARY_NAME);
 #else
 		ret = alloc_chrdev_region(&devno, 0, 1, NVT_SPI_NAME);
@@ -2857,7 +2857,7 @@ int32_t nvt_fw_class_init(bool create)
 
 		ts_class_dev = device_create(touchscreen_class, NULL,
 				devno,
-#if defined (PALM_GESTURE) || defined (EDGE_SUPPRESSION) || defined(NVT_TOUCH_LAST_TIME)
+#if defined (PALM_GESTURE) || defined (EDGE_SUPPRESSION) || defined(NVT_TOUCH_LAST_TIME) || defined(NVT_SENSOR_EN)
 				ts, NVT_PRIMARY_NAME);
 #else
 				ts, NVT_SPI_NAME);
@@ -2877,7 +2877,7 @@ int32_t nvt_fw_class_init(bool create)
 		if (error)
 			goto device_destroy;
 		else
-#if defined (PALM_GESTURE) || defined (EDGE_SUPPRESSION) || defined(NVT_TOUCH_LAST_TIME)
+#if defined (PALM_GESTURE) || defined (EDGE_SUPPRESSION) || defined(NVT_TOUCH_LAST_TIME) || defined(NVT_SENSOR_EN)
 			NVT_LOG("create /sys/class/touchscreen/%s Succeeded!\n", NVT_PRIMARY_NAME);
 #else
 			NVT_LOG("create /sys/class/touchscreen/%s Succeeded!\n", NVT_SPI_NAME);
