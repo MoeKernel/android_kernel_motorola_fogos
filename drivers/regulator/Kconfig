@@ -1234,5 +1234,7 @@ source "drivers/regulator/wl2864c/Kconfig"
 
 source "drivers/regulator/wl2868c/Kconfig"
 
+source "drivers/regulator/ocp2138/Kconfig"
+
 endif
 
