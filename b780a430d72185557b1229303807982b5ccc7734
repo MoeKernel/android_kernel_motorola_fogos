@@ -16,6 +16,24 @@
       "message": "Fixes charging on rhodep, thanks!",
       "revId": "b780a430d72185557b1229303807982b5ccc7734",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08dbf50d_de564f1c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34240
+      },
+      "writtenOn": "2025-05-26T07:45:24Z",
+      "side": 1,
+      "message": "It had charging issues?",
+      "parentUuid": "7494e0a0_60087cc2",
+      "revId": "b780a430d72185557b1229303807982b5ccc7734",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
