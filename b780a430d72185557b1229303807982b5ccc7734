@@ -34,6 +34,24 @@
       "parentUuid": "7494e0a0_60087cc2",
       "revId": "b780a430d72185557b1229303807982b5ccc7734",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5eb54ef_5c89fadd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 20370
+      },
+      "writtenOn": "2025-05-26T08:01:16Z",
+      "side": 1,
+      "message": "Yes, quoting my message from the Telegram channel:\n\nCharging switches back and forth between 3W and 20+W every 4-5s and logcat contains messages which I never saw before on rhodep:\n05-25 18:51:45.696     0     0 I mmi_chrg_manager: mmi_qc3p_chrg_sm_work_func: CP MASTER was disabled, Enter into SW directly\n\nReverting https://github.com/LineageOS/android_kernel_motorola_sm6375/commit/c22b699846c1603664513431ca228897f10ddb3e fixed the problem and rhodep charges with up to 30W again, all measured with a volt meter.",
+      "parentUuid": "08dbf50d_de564f1c",
+      "revId": "b780a430d72185557b1229303807982b5ccc7734",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
