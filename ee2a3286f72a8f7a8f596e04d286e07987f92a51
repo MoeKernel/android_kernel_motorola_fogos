@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f18a2e64_8a264465",
+        "filename": "drivers/power/bq2597x_mmi_iio/bq2597x_mmi_iio.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 2052,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2025-05-26T08:26:00Z",
+      "side": 1,
+      "message": "Shouldn\u0027t it be like this?\n```suggestion\n\t\t\t| (bq-\u003edie_therm_fault \u003c\u003c DIE_THERM_FAULT_SHIFT)\n\t\t\t| (bq-\u003ecp_switch \u003c\u003c CP_SWITCH_SHIFT));\n```",
+      "range": {
+        "startLine": 2051,
+        "startChar": 3,
+        "endLine": 2052,
+        "endChar": 40
+      },
+      "revId": "ee2a3286f72a8f7a8f596e04d286e07987f92a51",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
