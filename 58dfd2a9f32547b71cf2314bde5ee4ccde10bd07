@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38a2dcc5_7d1a5f00",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 20370
+      },
+      "writtenOn": "2025-06-10T18:42:14Z",
+      "side": 1,
+      "message": "The comment was part of my patch series to keep track on the sources.",
+      "revId": "58dfd2a9f32547b71cf2314bde5ee4ccde10bd07",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
