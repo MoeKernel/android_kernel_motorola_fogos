@@ -46,6 +46,29 @@
       },
       "revId": "c0c987b578e1660c21274209c83b6c3ea0844302",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f271186d_9706945b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-06-10T18:47:37Z",
+      "side": 1,
+      "message": "Out of curiosity, are you adding this manually? If I am not mistaken, when done via git command, it gets added below \"Change-ID: xxxxxxxxxx\".",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 47
+      },
+      "revId": "c0c987b578e1660c21274209c83b6c3ea0844302",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
