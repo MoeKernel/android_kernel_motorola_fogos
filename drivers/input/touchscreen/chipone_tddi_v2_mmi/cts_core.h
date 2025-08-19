@@ -402,6 +402,12 @@ enum touch_panel_id {
 };
 
 #ifdef CHIPONE_SENSOR_EN
+/* display state */
+enum display_state {
+        SCREEN_UNKNOWN,
+        SCREEN_OFF,
+        SCREEN_ON,
+};
 struct chipone_sensor_platform_data {
         struct input_dev *input_sensor_dev;
         struct sensors_classdev ps_cdev;
@@ -453,6 +459,8 @@ struct chipone_ts_data {
         bool should_enable_gesture;
         bool gesture_enabled;
         uint32_t report_gesture_key;
+        enum display_state screen_state;
+        struct mutex state_mutex;
         struct chipone_sensor_platform_data *sensor_pdata;
 #ifdef CONFIG_HAS_WAKELOCK
         struct wake_lock gesture_wakelock;
