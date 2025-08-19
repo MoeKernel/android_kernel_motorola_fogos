@@ -467,6 +467,7 @@ struct chipone_ts_data {
 #endif
 
 #ifdef CONFIG_BOARD_USES_DOUBLE_TAP_CTRL
+        unsigned char gesture_mode_type;
         bool d_tap_flag;
         bool s_tap_flag;
 #endif
