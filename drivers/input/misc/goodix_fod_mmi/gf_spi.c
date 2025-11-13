@@ -103,7 +103,7 @@ struct FPS_data {
 	unsigned int enabled;
 	unsigned int state;
 	struct notifier_block   relay_notif;
-} *fpsData;
+} *gf_fpsData;
 #endif
 static void gf_enable_irq(struct gf_dev *gf_dev)
 {
@@ -160,9 +160,9 @@ static struct FPS_data *FPS_init(struct device *dev)
 	return mdata;
 }
 
-void FPS_notify(unsigned long stype, int state)
+void gf_FPS_notify(unsigned long stype, int state)
 {
-	struct FPS_data *mdata = fpsData;
+	struct FPS_data *mdata = gf_fpsData;
 
 	pr_debug("%s: Enter", __func__);
 
@@ -190,7 +190,7 @@ static ssize_t dev_enable_set(struct device *dev,
 {
 	int state = (*buf == '1') ? 1 : 0;
 #ifdef MMI_RELAY_MODULE
-	FPS_notify(0xbeef, state);
+	gf_FPS_notify(0xbeef, state);
 #endif
 	dev_dbg(dev, "%s state = %d\n", __func__, state);
 	return count;
@@ -584,7 +584,7 @@ static long gf_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 			break;
 		}
 #ifdef MMI_RELAY_MODULE
-		FPS_notify(0xbeef, (dev_enable == 0)? 0: 1);
+		gf_FPS_notify(0xbeef, (dev_enable == 0)? 0: 1);
 #endif
 		pr_debug("%s device enable status %d\n", __func__, dev_enable);
 		break;
@@ -904,7 +904,7 @@ static int gf_probe(struct platform_device *pdev)
 	gf_disable_irq(gf_dev);
 	device_init_wakeup(dev, true);
 #ifdef MMI_RELAY_MODULE
-	fpsData = FPS_init(dev);
+	gf_fpsData = FPS_init(dev);
 #endif
 	status = sysfs_create_group(&dev->kobj, &attribute_group);
 	if (status) {
