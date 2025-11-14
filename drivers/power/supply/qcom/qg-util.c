@@ -310,7 +310,7 @@ bool is_input_present(struct qpnp_qg *chip)
 
 bool is_parallel_available(struct qpnp_qg *chip)
 {
-	if (is_chan_valid(chip, PARALLEL_CHARGING_ENABLED))
+	if (qg_is_chan_valid(chip, PARALLEL_CHARGING_ENABLED))
 		return true;
 
 	return false;
@@ -479,7 +479,7 @@ int qg_get_ibat_avg(struct qpnp_qg *chip, int *ibat_ua)
 	return 0;
 }
 
-bool is_chan_valid(struct qpnp_qg *chip,
+bool qg_is_chan_valid(struct qpnp_qg *chip,
 		enum qg_ext_iio_channels chan)
 {
 	int rc;
@@ -509,7 +509,7 @@ int qg_read_iio_chan(struct qpnp_qg *chip,
 {
 	int rc;
 
-	if (is_chan_valid(chip, chan)) {
+	if (qg_is_chan_valid(chip, chan)) {
 		rc = iio_read_channel_processed(
 				chip->ext_iio_chans[chan], val);
 		return (rc < 0) ? rc : 0;
@@ -521,7 +521,7 @@ int qg_read_iio_chan(struct qpnp_qg *chip,
 int qg_write_iio_chan(struct qpnp_qg *chip,
 	enum qg_ext_iio_channels chan, int val)
 {
-	if (is_chan_valid(chip, chan))
+	if (qg_is_chan_valid(chip, chan))
 		return iio_write_channel_raw(chip->ext_iio_chans[chan],
 						val);
 

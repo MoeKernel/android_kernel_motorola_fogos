@@ -30,7 +30,7 @@ int qg_get_battery_voltage(struct qpnp_qg *chip, int *vbat_uv);
 int qg_get_vbat_avg(struct qpnp_qg *chip, int *vbat_uv);
 s64 qg_iraw_to_ua(struct qpnp_qg *chip, int iraw);
 int qg_get_ibat_avg(struct qpnp_qg *chip, int *ibat_ua);
-bool is_chan_valid(struct qpnp_qg *chip, enum qg_ext_iio_channels chan);
+bool qg_is_chan_valid(struct qpnp_qg *chip, enum qg_ext_iio_channels chan);
 int qg_read_iio_chan(struct qpnp_qg *chip,
 	enum qg_ext_iio_channels chan, int *val);
 int qg_write_iio_chan(struct qpnp_qg *chip,
