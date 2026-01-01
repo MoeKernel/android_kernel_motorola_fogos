@@ -63,8 +63,6 @@ source "drivers/nfc/samsung/Kconfig"
 source "drivers/nfc/sn2xx/Kconfig"
 endmenu
 
-source "drivers/nfc/sn1xx/Kconfig"
-
 config NFC_QTI_I2C
 	tristate "QTI NCI based NFC I2C Slave Driver for SNxxx"
 	depends on I2C
