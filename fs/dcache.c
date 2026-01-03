@@ -2253,6 +2253,7 @@ struct dentry *__d_lookup_rcu(const struct dentry *parent,
 	hlist_bl_for_each_entry_rcu(dentry, node, b, d_hash) {
 		unsigned seq;
 
+seqretry:
 		/*
 		 * The dentry sequence count protects us from concurrent
 		 * renames, and thus protects parent and name fields.
