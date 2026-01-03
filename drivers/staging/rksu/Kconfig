@@ -1,6 +1,6 @@
 menu "KernelSU"
 
-config RKSU
+config KSU
 	tristate "KernelSU function support"
 	default y
 	help
