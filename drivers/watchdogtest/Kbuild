@@ -1,3 +1,7 @@
 # add -Wall to try to catch everything we can.
+EXTRA_CFLAGS += -Wall
+EXTRA_CFLAGS += -I$(srctree)/$(src)/../../include
 
 obj-$(CONFIG_WATCHDOGTEST) += watchdogtest.o
+KBUILD_EXTRA_SYMBOLS += $(KBUILD_OUTPUT)/Module.symvers
+

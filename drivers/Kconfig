@@ -88,6 +88,12 @@ source "drivers/thermal/Kconfig"
 
 source "drivers/watchdog/Kconfig"
 
+source "drivers/watchdogtest/Kconfig"
+
+source "drivers/moto_mm/Kconfig"
+
+source "drivers/moto_f_usbnet/Kconfig"
+
 source "drivers/ssb/Kconfig"
 
 source "drivers/bcma/Kconfig"
