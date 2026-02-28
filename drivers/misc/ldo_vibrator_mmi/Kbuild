@@ -1,10 +1,5 @@
-# add -Wall to try to catch everything we can.
-
-ifneq ($(filter m y,$(CONFIG_VIBRATOR_NOISE_CAMERA)),)
-	ccflags-y += -DCONFIG_VIBRATOR_NOISE_CAMERA
-endif
+ccflags-y += -DCONFIG_VIBRATOR_NOISE_CAMERA
 
 ldo_vibrator_mmi-y += moto_ldo_vibrator.o
 
-obj-$(CONFIG_LDO_VIBRATOR_MMI) += ldo_vibrator_mmi.o
-
+obj-y += ldo_vibrator_mmi.o
