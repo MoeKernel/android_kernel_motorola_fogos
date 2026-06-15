@@ -1,0 +1,23 @@
+config INPUT_MISC_FPC1020
+	tristate "MMI FPC fingerprint sensor"
+	default n
+	help
+	  Say Y here if you wish to include support for MMI FPC fingerprint sensor.
+	  If unsure, say N.
+
+config INPUT_MISC_FPC1020_SAVE_TO_CLASS_DEVICE
+	bool "MMI FPC fingerprint sensor sysfs support"
+	default n
+	depends on INPUT_MISC_FPC1020
+	help
+	  Say Y here if you wish to include support for MMI FPC fingerprint sensor
+	  sysfs.
+	  If unsure, say N.
+
+config INPUT_MISC_FPC1020_SUPPORT_PIN_CTRL
+	bool "MMI FPC fingerprint sensor pinctrl support"
+	default n
+	depends on INPUT_MISC_FPC1020
+	help
+	  Say Y here if you wish to include pinctrl support for MMI FPC fingerprint sensor.
+	  If unsure, say N.

@@ -1,0 +1,26 @@
+ccflags-$(CONFIG_TOUCHSCREEN_CHIPONE_V2_MMI_ESD) += -DCONFIG_CTS_ESD_PROTECTION
+ccflags-$(CONFIG_TOUCHSCREEN_CHIPONE_V2_MMI_ENABLE_DOUBLE_TAP) += -DCHIPONE_SENSOR_EN
+ccflags-$(CONFIG_TOUCHSCREEN_CHIPONE_V2_MMI_GTP_LAST_TIME) += -DCONFIG_GTP_LAST_TIME
+ifneq ($(filter m y,$(CONFIG_INPUT_TOUCHSCREEN_MMI)),)
+    ccflags-y += -DCONFIG_INPUT_TOUCHSCREEN_MMI
+endif
+ccflags-$(CONFIG_TOUCHSCREEN_CHIPONE_V2_MMI_STOWED_MODE_EN) += -DCTS_STOWED_MODE_EN
+ccflags-$(CONFIG_TOUCHSCREEN_CHIPONE_V2_MMI_PM_BRL_SPI) += -DTOUCHSCREEN_PM_BRL_SPI
+ccflags-$(CONFIG_TOUCHSCREEN_CHIPONE_V2_MMI_CHECK_DEVICE_BOOTMODE) += -DCTS_CHECK_DEVICE_BOOTMODE
+
+obj-$(CONFIG_TOUCHSCREEN_CHIPONE_V2_MMI) += chipone_tddi_v2_mmi.o
+
+chipone_tddi_v2_mmi-objs := cts_driver.o
+chipone_tddi_v2_mmi-objs += cts_core.o
+chipone_tddi_v2_mmi-objs += cts_sfctrlv2.o
+chipone_tddi_v2_mmi-objs += cts_spi_flash.o
+chipone_tddi_v2_mmi-objs += cts_firmware.o
+chipone_tddi_v2_mmi-objs += cts_test.o
+chipone_tddi_v2_mmi-objs += cts_charger_detect.o
+chipone_tddi_v2_mmi-objs += cts_earjack_detect.o
+chipone_tddi_v2_mmi-objs += cts_tcs.o
+chipone_tddi_v2_mmi-objs += cts_platform.o
+chipone_tddi_v2_mmi-objs += cts_tool.o
+chipone_tddi_v2_mmi-objs += cts_sysfs.o
+chipone_tddi_v2_mmi-objs += cts_strerror.o
+chipone_tddi_v2_mmi-objs += cts_oem.o

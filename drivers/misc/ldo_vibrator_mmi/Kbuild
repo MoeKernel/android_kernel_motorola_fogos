@@ -1,0 +1,5 @@
+ccflags-y += -DCONFIG_VIBRATOR_NOISE_CAMERA
+
+ldo_vibrator_mmi-y += moto_ldo_vibrator.o
+
+obj-y += ldo_vibrator_mmi.o

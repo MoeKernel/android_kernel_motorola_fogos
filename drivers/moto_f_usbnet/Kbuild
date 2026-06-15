@@ -1,0 +1,4 @@
+# add -Wall to try to catch everything we can.
+
+moto_f_usbnet-objs += f_usbnet.o
+obj-$(CONFIG_MOTO_F_USBNET) += moto_f_usbnet.o

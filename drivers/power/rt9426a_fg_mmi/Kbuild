@@ -1,0 +1,2 @@
+rt9426a_fg_mmi-objs += rt9426a_battery.o
+obj-$(CONFIG_RT9426A_FG_MMI) += rt9426a_fg_mmi.o

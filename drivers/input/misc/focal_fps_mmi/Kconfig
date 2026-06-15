@@ -1,0 +1,20 @@
+config INPUT_FOCAL_FPS_MMI
+	tristate "MMI Focaltech fingerprint sensor"
+	default n
+	help
+	  Say Y here if you wish to include support for MMI focaltech fingerprint sensor.
+	  If unsure, say N.
+
+config INPUT_FOCAL_SUPPORT_DRM_SCREEN
+	bool "MMI Focaltech fingerprint sensor DRM panel notifications"
+	depends on INPUT_FOCAL_FPS_MMI
+	default n
+	help
+	  Enable DRM panel notifications for MMI Focaltech fingerprint sensor.
+
+config INPUT_FOCAL_PANEL_NOTIFICATIONS
+	bool "MMI Focaltech fingerprint sensor panel notifications"
+	depends on INPUT_FOCAL_FPS_MMI
+	default n
+	help
+	  Enable panel notifications for MMI Focaltech fingerprint sensor.

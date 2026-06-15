@@ -1,0 +1,1 @@
+obj-$(CONFIG_REGULATOR_OCP2138) += ocp2138.o

@@ -1,0 +1,3 @@
+mm8013c_fg_mmi-objs += mm8013c_battery.o
+
+obj-$(CONFIG_MMI_MM8013C_FG) += mm8013c_fg_mmi.o

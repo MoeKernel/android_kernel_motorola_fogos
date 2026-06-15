@@ -1,0 +1,6 @@
+# add -Wall to try to catch everything we can.
+
+ccflags-y += -DCONFIG_AW882XX_CODEC -DCONFIG_AW882XX_DSP
+
+aw882xx_k419-objs = aw882xx.o
+obj-$(CONFIG_SND_SOC_AW882XX_K419) += aw882xx_k419.o

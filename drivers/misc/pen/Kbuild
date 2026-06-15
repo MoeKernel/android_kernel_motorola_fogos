@@ -1,0 +1,3 @@
+bu520xx-y := bu520xx_pen.o
+
+obj-$(CONFIG_MISC_BU520XX_PEN) += bu520xx_pen.o

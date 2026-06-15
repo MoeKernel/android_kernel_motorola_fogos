@@ -1,0 +1,3 @@
+nfc_nci-objs:= nfc_common.o nfc_i2c_drv.o ese_cold_reset.o
+
+obj-$(CONFIG_NFC_SN2XX) += nfc_nci.o

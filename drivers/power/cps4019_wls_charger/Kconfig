@@ -1,0 +1,6 @@
+config CPS_WLS_CHARGER
+	tristate "CPS wireless charger driver"
+	depends on POWER_SUPPLY
+	depends on I2C
+	help
+	  Say Y to enable support for CPS wireless charger.

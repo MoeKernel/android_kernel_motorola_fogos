@@ -1,0 +1,1 @@
+obj-$(CONFIG_LEDS_AW2033) += leds_aw2033.o

@@ -1,0 +1,76 @@
+#
+# Goodix touchscreen driver configuration
+#
+menuconfig TOUCHSCREEN_GOODIX_BRL_MMI
+	tristate "MMI Goodix berlin touchscreen"
+	default n
+	help
+	  Say Y here if you have a MMI Goodix berlin series touch controller
+	  to your system.
+
+	  If build module, say M.
+	  If unsure, say N.
+
+if TOUCHSCREEN_GOODIX_BRL_MMI
+
+config TOUCHSCREEN_GOODIX_BRL_MMI_SPI
+	bool "support SPI bus connection"
+	help
+	  Say Y here if the touchscreen is connected via SPI bus.
+
+config TOUCHSCREEN_GOODIX_BRL_MMI_FOD
+	bool "Enable FOD"
+	help
+	  Say Y here to support FOD.
+
+config TOUCHSCREEN_GOODIX_BRL_MMI_LIMIT_USE_SUPPLIER
+	bool "Support using supplier"
+	help
+	  Say Y here to support using supplier.
+
+config TOUCHSCREEN_GOODIX_BRL_MMI_ENABLE_PM_QOS
+	bool "Enable PM QoS"
+	help
+	  Say Y here to support PM QoS.
+
+config TOUCHSCREEN_GOODIX_BRL_MMI_ESD_ENABLE
+	bool "Support ESD"
+	help
+	  Say Y here to support ESD.
+
+config TOUCHSCREEN_GOODIX_BRL_MMI_SAVE_IN_CSV
+	bool "Factory calibration"
+	help
+	  Say Y here to support factory calibration.
+
+config TOUCHSCREEN_GOODIX_BRL_MMI_LAST_TIME
+	bool "Support last time"
+	help
+	  Say Y here to support last time.
+
+config TOUCHSCREEN_GOODIX_BRL_MMI_DDA_STYLUS
+	bool "Support stylus"
+	help
+	  Say Y here to support stylus.
+
+config TOUCHSCREEN_GOODIX_BRL_MMI_DDA_PASSIVE_STYLUS
+	bool "Support passive stylus"
+	help
+	  Say Y here to support passive stylus.
+
+config TOUCHSCREEN_GOODIX_BRL_MMI_ENABLE_PALM
+	bool "Support palm detection"
+	help
+	  Say Y here to support palm detection.
+
+config TOUCHSCREEN_GOODIX_BRL_MMI_PALM_CANCEL
+	bool "Support palm cancel"
+	help
+	  Say Y here to support palm cancel.
+
+config TOUCHSCREEN_GOODIX_BRL_MMI_PASSIVE_PEN_NOTIFIER
+	bool "Support pen notifier"
+	help
+	  Say Y here to support pen notifier.
+
+endif
