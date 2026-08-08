@@ -674,7 +674,7 @@ static int cts_driver_probe(struct spi_device *client)
             if (!check_default_tp(dp, "qcom,i2c-touch-active"))
                 ret = -EPROBE_DEFER;
             else
-                ret = -ENODEV;
+                ret = -EPROBE_DEFER;
 
             cts_err("%s: %s not actived\n", __func__, dp->name);
             return ret;
