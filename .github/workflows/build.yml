@@ -1,0 +1,81 @@
+name: Build Kernel - fogos (KernelSU)
+
+on:
+workflow_dispatch:
+
+jobs:
+build:
+runs-on: ubuntu-22.04
+timeout-minutes: 60
+
+steps:
+  - name: 📥 Checkout Source
+    uses: actions/checkout@v4
+
+  - name: 🧰 Install Dependencies
+    run: |
+      sudo apt update
+      sudo apt install -y \
+        bc bison build-essential curl flex git libssl-dev \
+        libncurses5-dev libelf-dev dwarves zstd ccache \
+        python3 python-is-python3
+
+  - name: ⚙️ Setup ccache
+    run: |
+      echo "CCACHE_DIR=$HOME/.ccache" >> $GITHUB_ENV
+      echo "CCACHE_MAXSIZE=10G" >> $GITHUB_ENV
+      ccache -M 10G
+
+  - name: 📥 Clone Clang Toolchain
+    run: |
+      git clone --depth=1 https://github.com/ZyCromerZ/Clang.git clang
+
+  - name: 📥 Clone KernelSU
+    run: |
+      git clone https://github.com/tiann/KernelSU drivers/kernelsu
+
+  - name: 🔧 Integrate KernelSU
+    run: |
+      if ! grep -q "kernelsu" drivers/Makefile; then
+        echo 'obj-y += kernelsu/' >> drivers/Makefile
+      fi
+      if ! grep -q "kernelsu" drivers/Kconfig; then
+        echo 'source "drivers/kernelsu/Kconfig"' >> drivers/Kconfig
+      fi
+
+  - name: 🏗️ Build Kernel
+    run: |
+      export ARCH=arm64
+      export SUBARCH=arm64
+      export KBUILD_BUILD_USER=github
+      export KBUILD_BUILD_HOST=actions
+      export PATH=$PWD/clang/bin:$PATH
+
+      mkdir -p out
+
+      make O=out ARCH=arm64 fogos_defconfig
+
+      scripts/config --file out/.config -e CONFIG_KSU
+
+      make -j$(nproc --all) \
+        O=out \
+        ARCH=arm64 \
+        CC=clang \
+        CROSS_COMPILE=aarch64-linux-gnu- \
+        CROSS_COMPILE_ARM32=arm-linux-gnueabi-
+
+  - name: 📥 Clone AnyKernel3
+    run: |
+      git clone https://github.com/osm0sis/AnyKernel3
+
+  - name: 📦 Prepare Flashable Zip
+    run: |
+      cp out/arch/arm64/boot/Image.gz AnyKernel3/
+      cd AnyKernel3
+      zip -r9 fogos-kernelsu.zip *
+
+  - name: 📤 Upload Kernel Zip
+    uses: actions/upload-artifact@v4
+    with:
+      name: fogos-kernelsu
+      path: AnyKernel3/fogos-kernelsu.zip
